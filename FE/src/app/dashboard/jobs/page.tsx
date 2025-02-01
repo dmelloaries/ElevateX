@@ -118,15 +118,14 @@ const DashboardJobsPage = () => {
                         
                         <h2 className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors">{job.title}</h2>
                         <a href={job.share_link} target="_blank" rel="noopener noreferrer"></a>
-<Button 
-  size="sm" 
-  as="a" 
+                        <a 
+  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700" 
   href={job.apply_options[0]?.link} 
   target="_blank" 
   rel="noopener noreferrer"
 >
   Apply
-</Button>
+</a>
                       </div>
 
                       <div className="mt-2 flex items-center text-gray-500 text-sm gap-4">
