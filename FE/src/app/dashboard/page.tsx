@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { MetricCard } from "@/components/metric-card";
 import { BarChart } from "@/components/bar-chart";
 import { Demographics } from "@/components/demographics";
@@ -25,8 +26,9 @@ const generateRandomData = () => {
 };
 
 const data = generateRandomData();
-
 export default function Page() {
+  const router = useRouter();
+
   const metrics = [
     {
       title: "Total Questions Attempted",
@@ -137,12 +139,26 @@ export default function Page() {
   return (
     <div className=" bg-black">
       <div className="max-w-6xl mx-auto space-y-8">
-        <div> 
+        <div>
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-semibold text-white">
               Skill Analysis Overview
             </h1>
-            <Button className="bg-green-700 hover:bg-green-800">Take Assessment Test</Button>
+
+            <div className="justify-end">
+              <Button
+                className="bg-cyan-900 hover:bg-cyan-1000 mr-2"
+                onClick={() => router.push("/assessment/resume")}
+              >
+                Upload Resume
+              </Button>
+              <Button
+                className="bg-green-700 hover:bg-green-800"
+                onClick={() => router.push("/assessment/test")}
+              >
+                Take Assessment Test
+              </Button>
+            </div>
           </div>
           <p className="text-gray-400 mt-2">
             Welcome {localStorage.getItem("userName") || "User"}

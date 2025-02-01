@@ -105,7 +105,7 @@ const HeroSection = () => {
               change="12"
               isPercentage={true}
             />
-            <MetricCard title="Follower Growth" value="+2.4k" change="8" />
+            <MetricCard title="growth" value="+2.4k" change="8" />
             <MetricCard title="Reach" value="85.2k" change="15" />
             <MetricCard title="Best Time" value="9 PM" date="Thu" change={""} />
           </div>

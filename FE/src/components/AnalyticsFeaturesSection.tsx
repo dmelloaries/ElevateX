@@ -20,39 +20,39 @@ const AnalyticsFeaturesSection: React.FC<AnalyticsFeaturesSectionProps> = ({
   const features = [
     {
       icon: <BarChart2 className="w-6 h-6 text-violet-500" />,
-      title: "Engagement Analytics",
+      title: "AI Interviewer",
       description:
-        "Track likes, comments, saves, and shares. Understand what content resonates with your audience.",
+        "Leverage AI-driven analytics to understand which content resonates the most with your audience by tracking likes, comments, saves, and shares. Optimize your content strategy with data-backed insights.",
     },
     {
       icon: <Users className="w-6 h-6 text-violet-500" />,
-      title: "Audience Insights",
+      title: "Career Insights",
       description:
-        "Detailed demographic data, follower growth patterns, and audience behavior analysis.",
+        "Access in-depth demographic data and valuable insights about your audience's behavior. Gain a better understanding of follower growth, engagement patterns, and preferences to refine your strategy.",
     },
     {
       icon: <Clock className="w-6 h-6 text-violet-500" />,
-      title: "Best Posting Times",
+      title: "Job Recommendation",
       description:
-        "AI-powered recommendations for optimal posting times based on your audience's activity.",
+        "AI-powered recommendations to help you find the best times to post based on when your audience is most active. Maximize engagement and increase visibility with smart timing suggestions.",
     },
     {
       icon: <PieChart className="w-6 h-6 text-violet-500" />,
       title: "Performance Reports",
       description:
-        "Automated weekly and monthly reports with key metrics and actionable insights.",
+        "Receive detailed automated reports on a weekly and monthly basis, showcasing key performance metrics. Gain actionable insights to help you track your growth and make informed decisions.",
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-violet-500" />,
       title: "Competitor Analysis",
       description:
-        "Compare your performance with competitors and identify growth opportunities.",
+        "Benchmark your performance against competitors in your field. Identify strengths, weaknesses, and potential areas for growth by comparing key metrics and strategies.",
     },
     {
       icon: <CheckCircle className="w-6 h-6 text-violet-500" />,
       title: "Content Performance",
       description:
-        "Detailed analysis of each post's performance with AI-powered recommendations.",
+        "Dive deep into the performance of your posts. Get AI-powered recommendations to improve engagement and refine your content strategy based on detailed performance data.",
     },
   ];
 
@@ -90,4 +90,5 @@ const AnalyticsFeaturesSection: React.FC<AnalyticsFeaturesSectionProps> = ({
     </div>
   );
 };
+
 export default AnalyticsFeaturesSection;

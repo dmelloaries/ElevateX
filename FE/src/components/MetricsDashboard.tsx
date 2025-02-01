@@ -42,7 +42,7 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = ({ id }) => {
       color: "#8B5CF6",
     },
     {
-      title: "Follower Growth",
+      title: "Career Growth",
       data: generateChartData(45),
       increase: "+12%",
       period: "Last 30 days",
@@ -58,7 +58,7 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = ({ id }) => {
       color: "#8B5CF6",
     },
     {
-      title: "Post Performance",
+      title: " Performance",
       data: generateChartData(50),
       increase: "+15%",
       period: "Last 30 days",

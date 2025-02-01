@@ -250,3 +250,58 @@ export const logoutUser = (req, res) => {
       .json(new ApiResponse(false, 500, null, "Internal Server Error"));
   }
 };
+
+export const storeUserSkillsAndSummary = async (req, res) => {
+  try {
+    const { userId: rawUserId, resumeSummary, skills } = req.body;
+    const userId = parseInt(rawUserId);
+
+    if (!userId || !resumeSummary || !skills) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        resumeSummary,
+        skills,
+      },
+    });
+
+    res.status(200).json({ message: "User skills & summary updated", user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+
+export const getUserSkillsAndSummary = async (req, res) => {  
+    try {
+        const userId = parseInt(req.query.userId, 10);
+
+        if (Number.isNaN(userId)) {
+            return res.status(400).json({ error: "Invalid userId format" });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                resumeSummary: true,
+                skills: true,
+            },
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+};
