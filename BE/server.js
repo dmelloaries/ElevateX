@@ -4,9 +4,10 @@ import express from "express";
 // * routes file
 import userRouter from "./routes/userRoutes.js";
 import cors from "cors";
+import careerRouter from "./routes/careerRoutes.js";
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -21,5 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRouter);
+app.use("/api/career", careerRouter);
+
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
