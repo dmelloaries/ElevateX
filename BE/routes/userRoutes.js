@@ -7,6 +7,7 @@ import {
   updateUser,
   storeUserSkillsAndSummary,
   getUserSkillsAndSummary,
+  storeTestResults,
 } from "../controllers/userController.js";
 import { verifyJWT } from "../middleware/authMiddleware.js";
 
@@ -18,7 +19,8 @@ router.post("/logout", verifyJWT, logoutUser);
 router.put("/update", verifyJWT, updateUser);
 router.delete("/delete", verifyJWT, deleteUser);
 
-router.post("/storeUserSkillsAndSummary",  storeUserSkillsAndSummary);
+router.post("/storeUserSkillsAndSummary", storeUserSkillsAndSummary);
+router.post("/storeTestResults", storeTestResults);
 
 router.get("/getUserSkillsAndSummary", getUserSkillsAndSummary);
 

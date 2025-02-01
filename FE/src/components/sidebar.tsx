@@ -113,7 +113,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             <Button
               variant="ghost"
               className="w-full justify-start text-gray-400 hover:bg-gray-800 hover:text-white"
-              onClick={() => router.push("/interview")}
+              onClick={() => router.push("http://localhost:5173/")}
             >
               <Brain className="mr-2 h-4 w-4" />
               AI Mock Interviewer

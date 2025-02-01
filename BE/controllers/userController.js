@@ -275,33 +275,76 @@ export const storeUserSkillsAndSummary = async (req, res) => {
   }
 };
 
+export const getUserSkillsAndSummary = async (req, res) => {
+  try {
+    const userId = parseInt(req.query.userId, 10);
 
-export const getUserSkillsAndSummary = async (req, res) => {  
-    try {
-        const userId = parseInt(req.query.userId, 10);
-
-        if (Number.isNaN(userId)) {
-            return res.status(400).json({ error: "Invalid userId format" });
-        }
-
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                resumeSummary: true,
-                skills: true,
-            },
-        });
-
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        res.status(200).json(user);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Something went wrong" });
+    if (Number.isNaN(userId)) {
+      return res.status(400).json({ error: "Invalid userId format" });
     }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        resumeSummary: true,
+        skills: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+
+export const storeTestResults = async (req, res) => {
+  try {
+    let {
+      userId,
+      Score,
+      Feedback,
+      "Recommended Career Path": recommendedCareer,
+      "Recommended Courses": recommendedCourses,
+    } = req.body;
+
+    // Convert userId to a number
+    userId = parseInt(userId, 10);
+    if (isNaN(userId)) {
+      return res.status(400).json({ error: "Invalid User ID format" });
+    }
+
+    // Find the user
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Store test results in the database
+    const testResult = await prisma.testResult.create({
+      data: {
+        userId,
+        score: Score,
+        strongSkills: Feedback["Strong Skills"],
+        weakSkills: Feedback["Weak Skills"],
+        recommendedCareer: recommendedCareer.join(", "),
+        recommendedCourses,
+      },
+    });
+
+    res
+      .status(201)
+      .json({ message: "Test results stored successfully", testResult });
+  } catch (error) {
+    console.error("Error storing test results:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
