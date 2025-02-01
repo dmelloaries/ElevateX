@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 // * routes file
 import userRouter from "./routes/userRoutes.js";
+import jobrouter from "./routes/jobroutes.js"
 import cors from "cors";
 
 const app = express();
@@ -21,5 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRouter);
+
+app.use("api/jobs", jobrouter);
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
