@@ -15,52 +15,42 @@ const DashboardJobsPage = () => {
   const [jobs, setJobs] = useState([]);
 
   const handleSearch = async () => {
-  // Ensure that both the industry and location are provided
-  if (!industry || !location) {
-    alert('Please enter both industry and location');
-    return;
-  }
-
-  // Set loading state while waiting for the response
-  setLoading(true);
-  setHasSearched(true);
-
-  try {
-    // Sending a POST request to the API
-    const response = await fetch(`https://skillassessmentapi.onrender.com/jobs`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ job_title: industry, location: location }),
-    });
-
-    // Checking if the response is successful
-    if (response.ok) {
-      const data = await response.json();
-
-      // Check if 'jobs' exists in the response data and update the state
-      setJobs(data.jobs || []);
-    } else {
-      // Handle unsuccessful API response
-      alert('Failed to fetch jobs. Please try again later.');
+    if (!industry || !location) {
+      alert('Please enter both industry and location');
+      return;
     }
-  } catch (error) {
-    // Catch any errors during the fetch operation
-    console.error('Error fetching jobs:', error);
-    alert('Error fetching jobs. Please try again later.');
-  } finally {
-    // Stop the loading state once the fetch is complete
-    setLoading(false);
-  }
-  };
-  
 
+    setLoading(true);
+    setHasSearched(true);
+
+    try {
+      const response = await fetch(`https://skillassessmentapi.onrender.com/jobs`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ job_title: industry, location: location }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setJobs(data.jobs || []);
+      } else {
+        alert('Failed to fetch jobs. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+      alert('Error fetching jobs. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!hasSearched) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Card className="w-full max-w-2xl mx-4 p-8">
+          {/* Initial search form remains the same */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Your Dream Job</h1>
             <p className="text-gray-600">Enter your preferred industry and location to get started</p>
@@ -89,7 +79,6 @@ const DashboardJobsPage = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      {/* Search bar for refinement */}
       <Card className="mb-6 p-4">
         <div className="flex gap-4">
           <Input value={industry} onChange={(e) => setIndustry(e.target.value)} placeholder="Industry" className="flex-1" />
@@ -101,7 +90,6 @@ const DashboardJobsPage = () => {
         </div>
       </Card>
 
-      {/* Results section */}
       {loading ? (
         <div className="flex items-center justify-center p-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -115,17 +103,9 @@ const DashboardJobsPage = () => {
                   <div className="flex items-start gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        
-                        <h2 className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors">{job.title}</h2>
-                        <a href={job.share_link} target="_blank" rel="noopener noreferrer"></a>
-                        <a 
-  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700" 
-  href={job.apply_options[0]?.link} 
-  target="_blank" 
-  rel="noopener noreferrer"
->
-  Apply
-</a>
+                        <h2 className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+                          {job.title}
+                        </h2>
                       </div>
 
                       <div className="mt-2 flex items-center text-gray-500 text-sm gap-4">
@@ -135,15 +115,32 @@ const DashboardJobsPage = () => {
                         <div className="flex items-center">
                           <MapPin className="h-4 w-4 mr-1" /> {job.location}
                         </div>
-                        <div className="flex items-center">
-                          <Clock className="h-4 w-4 mr-1" /> {job.posted}
-                        </div>
-                        <div className="flex items-center">
-                          <Users className="h-4 w-4 mr-1" /> {job.applicants} applicants
-                        </div>
+                        {job.extensions && job.extensions.map((ext, i) => (
+                          <Badge key={i} variant="secondary" className="ml-2">
+                            {ext}
+                          </Badge>
+                        ))}
                       </div>
 
                       <p className="mt-3 text-gray-600 line-clamp-2">{job.description}</p>
+
+                      {/* Added Apply Via Section */}
+                      <div className="mt-4">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2">Apply via:</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {job.apply_options && job.apply_options.slice(0, 3).map((option, i) => (
+                            <a
+                              key={i}
+                              href={option.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 transition duration-200"
+                            >
+                              {option.title}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
